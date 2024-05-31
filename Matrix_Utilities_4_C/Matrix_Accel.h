@@ -131,10 +131,20 @@ int                 Hadamard_Product(struct Matrix_t *A, struct Matrix_t *B);   
 struct Matrix_t     *n_Hadamard_Product(struct Matrix_t *A, struct Matrix_t *B);        // C = A .* B,     A.size == B.size
 struct Matrix_t     *Mul_Large_Matrix(struct Matrix_t *A, struct Matrix_t *B);          // C = A .* B^T,   Ensures more cache hits accelerating large array multiplies
 struct Matrix_t     *Mul_TPSD_Matrix(struct Matrix_t *A, struct Matrix_t *B);           // C = A .* B^T,   Arg B comes in trasnposed. Ensures more cache hits accelerating large array multiplies
+struct Matrix_t     *n_Scalar_Mul_Matrix(struct Matrix_t *A, MATRIX_D_TYPE scalar);     // B = [A] .* scalar
+int                 Scalar_Mul_Matrix(struct Matrix_t *A, MATRIX_D_TYPE scalar);        // A = [A] .* scalar
+struct Matrix_t     *n_Scalar_Div_Matrix(struct Matrix_t *A, MATRIX_D_TYPE scalar);     // B = [A] ./ scalar
+int                 Scalar_Div_Matrix(struct Matrix_t *A, MATRIX_D_TYPE scalar);        // A = [A] ./ scalar
 LONG_MATRIX_D_TYPE  Sum_of_Matrix_Elements(struct Matrix_t *A);                         // RET = SUM(A)
+
 
 
 // Ordering Functions
 int MTX_Order_NonZero_Diagonals(struct Matrix_t *A, struct Matrix_t *B);                // Orders A such that diagonals are non-zero, if B is provided perform same row operations on B
+
+
+// More Advanced Maths Functions
+LONG_MATRIX_D_TYPE  Matrix_Determinant(struct Matrix_t *A);
+struct Matrix_t     *n_Matrix_Inverse(struct Matrix_t *A);
 
 #endif

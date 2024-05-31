@@ -376,6 +376,78 @@ struct Matrix_t *Mul_TPSD_Matrix(struct Matrix_t *A, struct Matrix_t *B){
 }
 
 
+// B = [A] .* scalar
+struct Matrix_t *n_Scalar_Mul_Matrix(struct Matrix_t *A, MATRIX_D_TYPE scalar){
+    struct Matrix_t *B = NULL;
+    if(A){
+        B = Create_Matrix(A->size_x, A->size_y);
+        if(B){
+            for(unsigned int y = 0; y < A->size_y; ++y){
+                for(unsigned int x = 0; x < A->size_x; ++x){
+                    B->data[y][x] = A->data[y][x] * scalar;
+                }
+            }
+        }
+    }
+    return B;
+}
+
+
+// A = [A] .* scalar
+int Scalar_Mul_Matrix(struct Matrix_t *A, MATRIX_D_TYPE scalar){
+    int retval = MTX_FUNC_FAIL;
+    if(A){
+        for(unsigned int y = 0; y < A->size_y; ++y){
+            for(unsigned int x = 0; x < A->size_x; ++x){
+                A->data[y][x] *= scalar;
+            }
+        }
+        retval = MTX_FUNC_OK;
+    }
+    return retval;
+}
+
+// B = [A] ./ scalar
+struct Matrix_t *n_Scalar_Div_Matrix(struct Matrix_t *A, MATRIX_D_TYPE scalar){
+    struct Matrix_t *B = NULL;
+    if(A){
+        B = Create_Matrix(A->size_x, A->size_y);
+        if(B){
+            for(unsigned int y = 0; y < A->size_y; ++y){
+                for(unsigned int x = 0; x < A->size_x; ++x){
+                    B->data[y][x] = A->data[y][x] / scalar;
+                }
+            }
+        }
+    }
+    return B;
+}
+
+
+// A = [A] ./ scalar
+int Scalar_Div_Matrix(struct Matrix_t *A, MATRIX_D_TYPE scalar){
+    int retval = MTX_FUNC_FAIL;
+    if(A){
+        for(unsigned int y = 0; y < A->size_y; ++y){
+            for(unsigned int x = 0; x < A->size_x; ++x){
+                A->data[y][x] /= scalar;
+            }
+        }
+        retval = MTX_FUNC_OK;
+    }
+    return retval;
+}
+
+
+
+
+
+
+
+
+
+
+
 // RET = SUM(A)
 LONG_MATRIX_D_TYPE  Sum_of_Matrix_Elements(struct Matrix_t *A){
     LONG_MATRIX_D_TYPE sum_ = 0;
@@ -393,6 +465,7 @@ LONG_MATRIX_D_TYPE  Sum_of_Matrix_Elements(struct Matrix_t *A){
 
 // Ordering Functions
 // Orders A such that diagonals are non-zero, if B is provided perform same row operations on B
+// This almost certainly does not work
 int MTX_Order_NonZero_Diagonals(struct Matrix_t *A, struct Matrix_t *B){
     int retval = MTX_FUNC_FAIL;
     if(A){
